@@ -5,18 +5,27 @@
  */
 package tudienn;
 
+import java.util.List;
+
 /**
  *
  * @author thinhnguyen
  */
-public class Tudienn {
+public class Dictionary {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
+    private List<Word> words ;
+
+    public List<Word> getWords() {
+        return words;
     }
+
+    public void setWords(List<Word> words) {
+        this.words = words;
+    }
+
+   
+
+    
+    
     
 }
