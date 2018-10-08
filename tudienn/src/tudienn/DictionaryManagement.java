@@ -5,6 +5,9 @@
  */
 package tudienn;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +52,33 @@ public class DictionaryManagement {
 //       
 //                
 //    }
+    public Dictionary insertFromFile(){
+        Dictionary d = new Dictionary();
+        List<Word> listWords= new ArrayList<Word>();
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(new FileReader("D:\\GITHUB\\tudien\\tudienn\\src\\tudienn\\E_V.txt"));
+            String textInLine;
+            while((textInLine = br.readLine()) != null){
+                String[] wordsInALine = textInLine.split("<html>");
+                Word word = new Word();
+                word.setWord_target(wordsInALine[0]);
+                word.setWord_explain(wordsInALine[1]);
+                listWords.add(word);
+                
+                
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            try {
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        d.setWords(listWords);
+        return d;
+    }
 }
