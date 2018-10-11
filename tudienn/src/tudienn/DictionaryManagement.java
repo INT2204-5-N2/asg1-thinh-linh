@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 /**
- *
+ * Class DictionaryManagement 
  * @author thinhnguyen
  */
 public class DictionaryManagement {
@@ -22,7 +22,14 @@ public class DictionaryManagement {
     
    
    
-    
+/**
+ * Hàm insertFromCommandline() có chức năng nhập liệu: 
+Nhập vào bàn phím số lượng từ vựng (Word). 
+Format nhập dữ liệu từ điển Anh – Việt 
+Dòng 1: Nhập từ tiếng Anh 
+Dòng 2: Nhập giải thích sang tiếng Việt 
+ * @return Dictionary 
+ */   
     public Dictionary insertFromCommandline(){
          Scanner input = new Scanner(System.in);
         System.out.println("Nhap vao so luong tu! ");
@@ -42,30 +49,28 @@ public class DictionaryManagement {
         return dictionary;
  
     }
-//    public static void main(String[] args) {
-//        DictionaryManagement a = new DictionaryManagement();
-//        Dictionary d = a.insertFromCommandline();
-//        for(Word word : d.getWords()){
-//             System.out.println(word.getWord_explain());
-//             System.out.println(word.getWord_target());
-//        }
-//       
-//                
-//    }
+/**
+ * Hàm insertFromFile() nhập dữ liệu từ điển từ tệp E_V.txt 
+ * @return 
+ */
     public Dictionary insertFromFile(){
         Dictionary d = new Dictionary();
         List<Word> listWords= new ArrayList<Word>();
         BufferedReader br = null;
         try{
-            br = new BufferedReader(new FileReader("D:\\GITHUB\\tudien\\tudienn\\src\\tudienn\\E_V.txt"));
+            br = new BufferedReader(new FileReader("D:\\GITHUB\\dictionary\\tudienn\\src\\tudienn\\E_V.txt"));
             String textInLine;
             while((textInLine = br.readLine()) != null){
-                String[] wordsInALine = textInLine.split("<html>");
                 Word word = new Word();
-                word.setWord_target(wordsInALine[0]);
-                word.setWord_explain(wordsInALine[1]);
-                listWords.add(word);
-                
+                int index = textInLine.indexOf("<html>");
+                 String target = textInLine.substring(0, index);
+                 target = target.trim();
+                 String explain = textInLine.substring(index);
+                 
+                 word.setWord_explain(explain);
+                 word.setWord_target(target);
+                 listWords.add(word);
+
                 
             }
         }
@@ -81,4 +86,24 @@ public class DictionaryManagement {
         d.setWords(listWords);
         return d;
     }
+/**
+ * hàm tra cứu từ điển bằng dòng lệnh
+ * @param d 
+ */    
+    public void dictionaryLookup( Dictionary d){
+       Scanner input = new Scanner(System.in);
+        System.out.println("Nhap tu can tra cuu: ");
+       String s = input.nextLine();
+       boolean check = false;
+       for(Word w : d.getWords()){
+           if(w.getWord_target().equals(s)){
+               check = true;
+               if(check) System.out.println( "tieng viet: "+w.getWord_explain());
+               break;
+           } 
+        
+    }
+      
+           if(!check) System.out.println("khong tim dc tu");
 }
+} 
