@@ -6,7 +6,7 @@
 package tudienn;
 
 /**
- *
+ * class Word gồm 2 thuộc tính word_target(từ mới), và word_explain(từ giải nghĩa)
  * @author thinhnguyen
  */
 public class Word {
