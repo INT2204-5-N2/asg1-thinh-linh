@@ -37,9 +37,15 @@ public class DictionnaryCommanLine {
     public static void dictionaryAdvanced(){
         Dictionary d = dictionaryManagement.insertFromFile();
         //showAllWords(d);
-        String aString= dictionaryManagement.dictionaryLookup(d);
-        System.out.println("tieng viet: "+aString);
-        d = dictionaryManagement.AddWord(d);
+        Word w = dictionaryManagement.dictionaryLookup(d);
+        if(w != null){ 
+        System.out.println("tieng viet: "+ w.getWord_explain());
+        dictionaryManagement.speech(w.getWord_target());
+        }
+        else System.out.println( "khong tim dc");
+        
+        
+        //d = dictionaryManagement.AddWord(d);
     }
     public static void main(String[] args) {
         dictionaryAdvanced();
