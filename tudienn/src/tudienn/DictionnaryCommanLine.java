@@ -5,7 +5,9 @@
  */
 package tudienn;
 
+import java.util.ArrayList;
 import java.util.List;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
  *
@@ -37,17 +39,31 @@ public class DictionnaryCommanLine {
     public static void dictionaryAdvanced(){
         Dictionary d = dictionaryManagement.insertFromFile();
         //showAllWords(d);
-        Word w = dictionaryManagement.dictionaryLookup(d);
-        if(w != null){ 
-        System.out.println("tieng viet: "+ w.getWord_explain());
-        dictionaryManagement.speech(w.getWord_target());
-        }
-        else System.out.println( "khong tim dc");
-        
+//        Word w = dictionaryManagement.dictionaryLookup(d);
+//        if(w != null){ 
+//        System.out.println("tieng viet: "+ w.getWord_explain());
+//        dictionaryManagement.speech(w.getWord_target());
+//        }
+//        else System.out.println( "khong tim dc");
+//        List<String> a = dictionarySearcher(d, "tra");
+//        for(String s: a){
+//            System.out.println(s);
+//        }
         
         //d = dictionaryManagement.AddWord(d);
     }
+    public static List<String> dictionarySearcher(Dictionary d ,String s){
+        List<String> dsList = new ArrayList<String>();
+        for(Word w : d.getWords()){
+            if(w.getWord_target().indexOf(s) ==0 ){
+                dsList.add(w.getWord_target());
+            }
+        }
+        return dsList;
+    }
     public static void main(String[] args) {
         dictionaryAdvanced();
+        
+        
     }
 }

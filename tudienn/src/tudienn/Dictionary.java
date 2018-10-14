@@ -8,7 +8,7 @@ package tudienn;
 import java.util.List;
 
 /**
- *Class Dictionary lưu trữ mảng Word  
+ * Class Dictionary lưu trữ mảng Word  
  * @author thinhnguyen
  */
 public class Dictionary {

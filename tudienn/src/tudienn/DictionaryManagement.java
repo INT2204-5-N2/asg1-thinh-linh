@@ -97,11 +97,11 @@ Dòng 2: Nhập giải thích sang tiếng Việt
  * hàm tra cứu từ điển bằng dòng lệnh
  * @param d 
  */    
-    public Word dictionaryLookup( Dictionary d){
+    public Word dictionaryLookup(String s, Dictionary d){
        Scanner input = new Scanner(System.in);
        // System.out.println("Nhap tu can tra cuu: ");
        
-       String s = input.nextLine();
+      // String s = input.nextLine();
        boolean check = false;
        for(Word w : d.getWords()){
            if(w.getWord_target().equals(s)){
@@ -114,7 +114,7 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         
     }
         
-            return null;
+            return new Word("", "khong tim dc tu");
 }
     public Dictionary AddWord(String wTarget, String wExplain,Dictionary d){
         Word w = new Word();
@@ -161,4 +161,6 @@ Dòng 2: Nhập giải thích sang tiếng Việt
     public Dictionary DelWord(Dictionary d){
        return null; 
     }
+    
+    
 } 
