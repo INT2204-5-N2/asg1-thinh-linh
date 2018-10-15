@@ -52,15 +52,7 @@ public class DictionnaryCommanLine {
         
         //d = dictionaryManagement.AddWord(d);
     }
-    public static List<String> dictionarySearcher(Dictionary d ,String s){
-        List<String> dsList = new ArrayList<String>();
-        for(Word w : d.getWords()){
-            if(w.getWord_target().indexOf(s) ==0 ){
-                dsList.add(w.getWord_target());
-            }
-        }
-        return dsList;
-    }
+    
     public static void main(String[] args) {
         dictionaryAdvanced();
         

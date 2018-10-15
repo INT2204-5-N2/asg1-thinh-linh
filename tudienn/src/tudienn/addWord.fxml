@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="395.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tudienn.DictionaryApplicationController">
+   <children>
+      <Label layoutX="118.0" layoutY="119.0" />
+      <Label layoutX="416.0" layoutY="105.0" text=" Tiếng Việt">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="101.0" layoutY="105.0" text="Tiếng Anh">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addWE" layoutX="55.0" layoutY="179.0" prefHeight="42.0" prefWidth="227.0" promptText="Nhập từ cần thêm" />
+      <TextField fx:id="addWV" layoutX="380.0" layoutY="179.0" prefHeight="42.0" prefWidth="227.0" promptText="Nhập giải nghĩa " />
+      <Button fx:id="Add" layoutX="265.0" layoutY="268.0" mnemonicParsing="false" onAction="#clickAdd2" prefHeight="31.0" prefWidth="132.0" text="THÊM">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

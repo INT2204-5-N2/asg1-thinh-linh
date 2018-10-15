@@ -151,6 +151,15 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         
         
     }
+    public List<String> dictionarySearcher(Dictionary d ,String s){
+        List<String> dsList = new ArrayList<String>();
+        for(Word w : d.getWords()){
+            if(w.getWord_target().indexOf(s) ==0 ){
+                dsList.add(w.getWord_target());
+            }
+        }
+        return dsList;
+    }
      public void speech(String text){
         VoiceManager voiceManager = VoiceManager.getInstance();
         com.sun.speech.freetts.Voice sVoice = voiceManager.getVoice("kevin16");

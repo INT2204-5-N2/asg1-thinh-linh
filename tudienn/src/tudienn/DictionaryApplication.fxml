@@ -16,7 +16,7 @@
          <children>
             <TextField fx:id="wSearch" layoutX="14.0" layoutY="42.0" prefHeight="31.0" prefWidth="216.0" />
             <Button fx:id="search" layoutX="261.0" layoutY="42.0" mnemonicParsing="false" onAction="#clickSearch" style="-fx-background-color: #ffffff;" text=" tra cứu" underline="true" />
-            <Button fx:id="addWord" layoutX="496.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="addWord" underline="true" />
+            <Button fx:id="addWord" layoutX="496.0" layoutY="42.0" mnemonicParsing="false" onAction="#clickAddWord" style="-fx-background-color: #ffffff;" text="addWord" underline="true" />
             <Button fx:id="editWord" layoutX="649.0" layoutY="42.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="EditWord" underline="true" />
             <Button fx:id="delWord" layoutX="799.0" layoutY="42.0" lineSpacing="1.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="DelWord" underline="true" />
             <Label layoutX="7.0" layoutY="4.0" text="Từ điển làm vội" textAlignment="CENTER" textFill="WHITE" underline="true">

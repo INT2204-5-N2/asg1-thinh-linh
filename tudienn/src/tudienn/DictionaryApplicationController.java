@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +24,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static tudienn.DictionnaryCommanLine.dictionarySearcher;
+//import static tudienn.DictionnaryCommanLine.dictionarySearcher;
 
 /**
  * FXML Controller class
@@ -73,7 +76,13 @@ public class DictionaryApplicationController extends Application{
     private WebView webView;
     @FXML
     private ListView<String> listView;
-    
+    @FXML
+    private TextField addWE;
+    @FXML
+    private TextField addWV;
+    @FXML
+    private Button Add;
+   
     
     public void clickSearch(ActionEvent event){
         s = wSearch.getText();
@@ -81,6 +90,14 @@ public class DictionaryApplicationController extends Application{
         String html = w.getWord_explain();
         WebEngine webEngine = webView.getEngine();
         webEngine.loadContent(html);
+        
+        List<String> listWord = dictionaryManagement.dictionarySearcher(d, s);
+        listView.getItems().clear();
+        for(String w: listWord){
+            listView.getItems().add(w);
+        }
+            
+        
         
         
        // System.out.print(s);
@@ -91,6 +108,28 @@ public class DictionaryApplicationController extends Application{
     public void clickVoice(ActionEvent event){
         dictionaryManagement.speech(w.getWord_target());
     }
+    public void clickAddWord(ActionEvent event){
+        try {
+            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("addWord.fxml"));
+            Parent root1 = (Parent)fXMLLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("THÊM TỪ");
+            stage.setScene(new Scene(root1));
+            stage.initModality(Modality.WINDOW_MODAL);
+           // stage.initOwner();
+            stage.show();
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }    
+ 
+    }
+    public void clickAdd2(ActionEvent event){
+        String eW = addWE.getText();
+        String eV = addWE.getText();
+        d = dictionaryManagement.AddWord(eV, eV, d);
+        
+    }
     
     public static void main(String[] args) {
         DictionaryApplicationController dac = new DictionaryApplicationController();
@@ -98,15 +137,17 @@ public class DictionaryApplicationController extends Application{
         launch(args);
     }
     @Override
-    public void start(Stage primaryStage){
+    public void start( Stage primaryStage){
        try{
            Parent root = FXMLLoader.load(getClass().getResource("DictionaryApplication.fxml"));
            Scene scene = new Scene(root);
            primaryStage.setScene(scene);
            primaryStage.setTitle("Dictionary by NGUYEN DINH THINH");
            primaryStage.show();
+           
        }catch(Exception e){
            System.out.println(e.getMessage());
        }
+           
     }
 }
