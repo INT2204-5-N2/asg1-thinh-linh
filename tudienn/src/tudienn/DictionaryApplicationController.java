@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -38,7 +39,9 @@ public class DictionaryApplicationController extends Application{
     private DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private static Dictionary d;
     private static Word w = new Word("","nope" ) ;
-    private static String s ;
+    private static String sFromTextField ;
+    private static String wE; // Word English tim dc, su dung cho void
+    private static String wV; // word Explain tim duoc
    
     public void dictionaryAdvanced(){
          d = dictionaryManagement.insertFromFile();
@@ -83,19 +86,33 @@ public class DictionaryApplicationController extends Application{
     @FXML
     private Button Add;
    
-    
+/**
+ * xử lí click button Search
+ * @param event 
+ */   
     public void clickSearch(ActionEvent event){
-        s = wSearch.getText();
-        w = dictionaryManagement.dictionaryLookup(s, d);
+        sFromTextField = wSearch.getText();
+        w = dictionaryManagement.dictionaryLookup(sFromTextField, d);
+        wE = w.getWord_target();
         String html = w.getWord_explain();
         WebEngine webEngine = webView.getEngine();
         webEngine.loadContent(html);
         
-        List<String> listWord = dictionaryManagement.dictionarySearcher(d, s);
+        List<String> listWord = dictionaryManagement.dictionarySearcher(d, sFromTextField);
         listView.getItems().clear();
         for(String w: listWord){
             listView.getItems().add(w);
         }
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+             //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //WebEngine webEngine = webView.getEngine();
+                wE = dictionaryManagement.dictionaryLookup(newValue, d).getWord_target();
+                webEngine.loadContent(dictionaryManagement.dictionaryLookup(newValue, d).getWord_explain());
+            }
+            
+        });
             
         
         
@@ -106,7 +123,7 @@ public class DictionaryApplicationController extends Application{
        // listView = dictionaryManagement.
     } 
     public void clickVoice(ActionEvent event){
-        dictionaryManagement.speech(w.getWord_target());
+        dictionaryManagement.speech(wE);
     }
     public void clickAddWord(ActionEvent event){
         try {
