@@ -65,7 +65,8 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         List<Word> listWords= new ArrayList<Word>();
         BufferedReader br = null;
         try{
-            br = new BufferedReader(new FileReader("D:\\GITHUB\\dictionary\\tudienn\\src\\tudienn\\E_V.txt"));
+             File file = new File("D:\\GITHUB\\asg1-thinh-linh\\tudienn\\src\\tudienn\\E_V.txt");
+            br = new BufferedReader(new FileReader(file));
             String textInLine;
             while((textInLine = br.readLine()) != null){
                 Word word = new Word();
@@ -98,7 +99,7 @@ Dòng 2: Nhập giải thích sang tiếng Việt
  * @param d 
  */    
     public Word dictionaryLookup(String s, Dictionary d){
-       Scanner input = new Scanner(System.in);
+      // Scanner input = new Scanner(System.in);
        // System.out.println("Nhap tu can tra cuu: ");
        
       // String s = input.nextLine();
@@ -114,7 +115,8 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         
     }
         
-            return new Word("", "khong tim dc tu");
+          return new Word("", "khong tim dc tu");
+          //return null;
 }
     public Dictionary AddWord(String wTarget, String wExplain,Dictionary d){
         Word w = new Word();
@@ -127,25 +129,25 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         w.setWord_target(wTarget);
         d.getWords().add(w);
         //ghi vao file
-        BufferedWriter bw = null;
-        FileWriter fw = null;
-        try {
-            File file = new File("D:\\GITHUB\\dictionary\\tudienn\\src\\tudienn\\E_V.txt");
-             fw = new FileWriter(file.getAbsoluteFile(), true);
-             bw = new BufferedWriter(fw);
-             bw.write("\n"+wTarget+wExplain);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-        try {
-            if(bw != null)
-                bw.close();
-            if(fw!=null)
-                fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//        BufferedWriter bw = null;
+//        FileWriter fw = null;
+//        try {
+//            File file = new File("D:\\GITHUB\\asg1-thinh-linh\\tudienn\\src\\tudienn\\E_V.txt");
+//             fw = new FileWriter(file.getAbsoluteFile(), true);
+//             bw = new BufferedWriter(fw);
+//             bw.write("\n"+wTarget+wExplain);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }finally{
+//        try {
+//            if(bw != null)
+//                bw.close();
+//            if(fw!=null)
+//                fw.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
         return d;
         
         
@@ -167,9 +169,53 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         sVoice.speak(text);
         sVoice.deallocate();
     }
-    public Dictionary DelWord(Dictionary d){
-       return null; 
-    }
+    public Dictionary DelWord(String s, Dictionary d){
+       Word w = this.dictionaryLookup(s, d);
+        //if(w.getWord_explain().equals("khong tim dc tu")) return d;
+        //else {
+            d.getWords().remove(w);
+            return d;
+        }
     
+    public Dictionary EditWord(String wE, String editWT, String editWE, Dictionary d){
+        Word word = this.dictionaryLookup(wE, d);
+        if(word.getWord_explain().equals("khong tim dc tu")) return d;
+        else if(editWT == ""){
+            for(Word w: d.getWords()){
+                if(w.getWord_target().equals(wE)){
+                    
+                }
+            }
+        }
+        return d;
+    }
+    /**
+     * 
+     * @param d 
+     */
+    public void dictionaryExportToFile(Dictionary d){
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        try {
+            File file = new File("D:\\GITHUB\\asg1-thinh-linh\\tudienn\\src\\tudienn\\E_V.txt");
+             fw = new FileWriter(file.getAbsoluteFile());
+             bw = new BufferedWriter(fw);
+             List<Word> wordsToFile = d.getWords();
+             for(Word w: wordsToFile){
+                 bw.write(w.getWord_target()+w.getWord_explain()+"\n");
+             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+        try {
+            if(bw != null)
+                bw.close();
+            if(fw!=null)
+                fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    }
     
 } 

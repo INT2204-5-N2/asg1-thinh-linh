@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tudienn.DictionaryApplicationController">
+   <children>
+      <TextField layoutX="34.0" layoutY="94.0" prefHeight="31.0" prefWidth="199.0" promptText="Nhập từ cần sửa" />
+      <TextField layoutX="34.0" layoutY="207.0" prefHeight="31.0" prefWidth="199.0" promptText="Sửa thành (sửa lỗi chính tả)" />
+      <TextField layoutX="339.0" layoutY="207.0" promptText="Sửa nghĩa của từ " />
+      <Label layoutX="80.0" layoutY="52.0" prefHeight="21.0" prefWidth="108.0" text="TỪ CẦN SỬA " />
+      <Label layoutX="245.0" layoutY="146.0" prefHeight="21.0" prefWidth="80.0" text="SỬA CHỮA " textAlignment="CENTER" />
+      <Line endX="100.0" layoutX="279.0" layoutY="175.0" startX="-100.0" />
+      <Button layoutX="239.0" layoutY="268.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="OK" />
+      <Pane layoutY="-2.0" prefHeight="44.0" prefWidth="600.0" style="-fx-background-color: #29B6F6;" />
+      <Pane layoutY="362.0" prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: #29B6F6;" />
+   </children>
+</AnchorPane>
