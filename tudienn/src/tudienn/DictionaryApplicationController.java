@@ -48,7 +48,7 @@ public class DictionaryApplicationController extends Application{
     private DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private static Dictionary d;
     private static Word w = new Word("","nope") ;
-    private static String sFromTextField ;
+  //  private static String sFromTextField ;
     private static String wE; // Word English tim dc, su dung cho void
     private static String wV; // word Explain tim duoc
    
@@ -98,6 +98,16 @@ public class DictionaryApplicationController extends Application{
     private TextField delW;
     @FXML
     private Button del;
+    @FXML
+    private TextField wEdit;
+    @FXML
+    private TextField editedTarget;
+    @FXML
+    private TextField editedExplain;
+    @FXML 
+    private Button edit;
+    
+    
     
    
 /**
@@ -105,7 +115,8 @@ public class DictionaryApplicationController extends Application{
  * @param event 
  */   
     public void clickSearch(ActionEvent event){
-        sFromTextField = wSearch.getText();
+        String sFromTextField = wSearch.getText();
+        sFromTextField =sFromTextField.trim();
         w = dictionaryManagement.dictionaryLookup(sFromTextField, d);
         wE = w.getWord_target();
         String html = w.getWord_explain();
@@ -150,7 +161,7 @@ public class DictionaryApplicationController extends Application{
             Parent root1 = (Parent)fXMLLoader.load();
            // addWordWindow = new Stage();
            Stage addWordWindow = new Stage();
-           addWordWindow = new Stage();
+          // addWordWindow = new Stage();
             addWordWindow.setTitle("THÊM TỪ");
             addWordWindow.setScene(new Scene(root1));
     
@@ -172,7 +183,9 @@ public class DictionaryApplicationController extends Application{
      */
     public void clickAdd2(ActionEvent event){
         String eW = addWE.getText();
+        eW = eW.trim();
         String eV = addWV.getText();
+        eV= eV.trim();
         if(eW.length() ==0 || eV.length() ==0){
            Alert alert = new Alert(Alert.AlertType.WARNING);
            alert.setContentText("BẠN CHƯA NHẬP TỪ MỚI HOẶC GIẢI NGHĨA!!");
@@ -207,14 +220,14 @@ public class DictionaryApplicationController extends Application{
            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("DelWord.fxml"));
             Parent root1 = (Parent)fXMLLoader.load();
            // addWordWindow = new Stage();
-           Stage addWordWindow = new Stage();
-           addWordWindow = new Stage();
-            addWordWindow.setTitle("XÓA TỪ");
-            addWordWindow.setScene(new Scene(root1));
+           Stage delWordWindow = new Stage();
+          // delWordWindow = new Stage();
+           delWordWindow.setTitle("XÓA TỪ");
+           delWordWindow.setScene(new Scene(root1));
     
            // stage.initOwner();
-           addWordWindow.initModality(Modality.APPLICATION_MODAL);
-           addWordWindow.show();
+           delWordWindow.initModality(Modality.APPLICATION_MODAL);
+           delWordWindow.show();
        } catch (Exception e) {
            System.out.println(e.getMessage());
        }
@@ -225,6 +238,7 @@ public class DictionaryApplicationController extends Application{
     */
    public void clickDel2(ActionEvent event){
        String s = delW.getText();
+       s=s.trim();
        Word wD = dictionaryManagement.dictionaryLookup(s, d);
        if(wD.getWord_explain().equals("khong tim dc tu")){
            Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -253,11 +267,138 @@ public class DictionaryApplicationController extends Application{
       // else d = dictionaryManagement.DelWord(s, d);
    }
    public void clickEditWord(ActionEvent event){
-       
+       try {
+           FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("EditWord.fxml"));
+            Parent root1 = (Parent)fXMLLoader.load();
+           // addWordWindow = new Stage();
+           Stage editWordWindow = new Stage();
+           //editWordWindow = new Stage();
+           editWordWindow.setTitle("SỬA TỪ");
+           editWordWindow.setScene(new Scene(root1));
+    
+           // stage.initOwner();
+           editWordWindow.initModality(Modality.APPLICATION_MODAL);
+           editWordWindow.show();
+       } catch (Exception e) {
+           System.out.println(e.getMessage());
+       }
    } 
-   public void clickEdit(ActionEvent event){
+    public void clickEdit(ActionEvent event){
+       String wEdit_ = wEdit.getText();
+       wEdit_ = wEdit_.trim();
+       
+       String editedTarget_ = editedTarget.getText();
+       editedTarget_ = editedTarget_.trim();
+       
+       String editedExplain_ = editedExplain.getText();
+       editedExplain_ = editedExplain_.trim();
+       
+       
+       if(wEdit_.length()==0){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setContentText("Bạn phải nhập từ cần sửa vào!!!");
+           
+           alert.show();
+           
+       }
+       else{
+           Word wD = dictionaryManagement.dictionaryLookup(wEdit_, d);
+           
+            if(wD.getWord_explain().equals("khong tim dc tu")){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("từ bạn muốn sửa không có trong từ điển!!!");
+           
+                alert.show();
+            }
+            else if(editedTarget_.length() == 0 && editedExplain_.length()==0){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Hãy sửa chính tả hoặc sửa nghĩa của từ vừa nhập!!!");
+           
+                    alert.show();
+                    }
+            else if(editedTarget_.length() != 0 && editedExplain_.length()==0){ // sửa chính tả
+            
+            
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("sửa: " +wEdit_+ " -----> "+ editedTarget_ );
+             
+                    Optional<ButtonType> option = alert.showAndWait();
+            
+                    if(option.get() == ButtonType.OK){
+                        
+                        //Word newWord = wD;
+                        //newWord.setWord_target(editedTarget_);
+            
+                        //d= dictionaryManagement.DelWord(wEdit_, d);
+                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
+                        d = dictionaryManagement.AddWord(editedTarget_, wD.getWord_explain(), d);
+                        d = dictionaryManagement.DelWord(wEdit_, d);
+            
+                        Stage stage = (Stage)edit.getScene().getWindow();
+                        stage.close();
+                        }
+                    else if(option.get() == ButtonType.CANCEL){
+                            alert.close();
+            
+                            }   
+        
+                    }
+            else if(editedTarget_.length() == 0 && editedExplain_.length()!=0){ // sửa nghĩa
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("sửa nghĩa của: " + wEdit_ + "   --->   "+ editedExplain_ );
+             
+                    Optional<ButtonType> option = alert.showAndWait();
+            
+                    if(option.get() == ButtonType.OK){
+            
+                        //Word newWord = wD;
+                        
+                        //newWord.setWord_target(editedTarget_);
+            
+                        //d= dictionaryManagement.DelWord(wEdit_, d);
+                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
+                        d = dictionaryManagement.AddWord(wEdit_,editedExplain_ , d);
+                        d = dictionaryManagement.DelWord(wEdit_, d); // vì từ mới được thêm vào cuối file nên nó sẽ ko xóa từ vừa sửa 
+            
+                        Stage stage = (Stage)edit.getScene().getWindow();
+                        stage.close();
+                        }
+                    else if(option.get() == ButtonType.CANCEL){
+                            alert.close();
+            
+                            }
+                    }
+            else if(editedTarget_.length() != 0 && editedExplain_.length()!=0){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("sửa: " + wEdit_ +"???");
+             
+                    Optional<ButtonType> option = alert.showAndWait();
+            
+                    if(option.get() == ButtonType.OK){
+            
+                        //Word newWord = wD;
+                        
+                        //newWord.setWord_target(editedTarget_);
+            
+                        //d= dictionaryManagement.DelWord(wEdit_, d);
+                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
+                        d = dictionaryManagement.AddWord(editedTarget_,editedExplain_ , d);
+                        d = dictionaryManagement.DelWord(wEdit_, d); // vì từ mới được thêm vào cuối file nên nó sẽ ko xóa từ vừa sửa 
+            
+                        Stage stage = (Stage)edit.getScene().getWindow();
+                        stage.close();
+                        }
+                    else if(option.get() == ButtonType.CANCEL){
+                            alert.close();
+            
+                            }
+            }
+            
+      
+       
        
    }
+    }
     
     /**
      * 
@@ -283,7 +424,7 @@ public class DictionaryApplicationController extends Application{
            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
                @Override
                public void handle(WindowEvent we){
-                   System.out.println("window is closing");
+                   //System.out.println("window is closing");
                    dictionaryManagement.dictionaryExportToFile(d);
                }
            });
