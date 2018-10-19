@@ -27,6 +27,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -39,7 +41,7 @@ import javafx.stage.WindowEvent;
  *
  * @author thinhnguyen
  */
-public class DictionaryApplicationController extends Application{
+public class DictionaryApplicationController extends Application implements  Initializable{
    // private  Stage addWordWindow ;
     
    // private final FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("addWord.fxml"));
@@ -110,16 +112,49 @@ public class DictionaryApplicationController extends Application{
     
     
    
+public void displaySuggest(ActionEvent event){
+    wSearch.setOnKeyPressed(new EventHandler<KeyEvent>(){
+        @Override
+        public void handle(KeyEvent event){
+            if(event.getCode() == KeyCode.ENTER){
+                String sFromTextField = wSearch.getText();
+                sFromTextField =sFromTextField.trim();
+                w = dictionaryManagement.dictionaryLookup(sFromTextField, d);
+                wE = w.getWord_target();
+                String html = w.getWord_explain();
+                WebEngine webEngine = webView.getEngine();
+                webEngine.loadContent(html);
+                List<String> listWord = dictionaryManagement.dictionarySearcher(d, sFromTextField);
+        listView.getItems().clear();
+        for(String w: listWord){
+            listView.getItems().add(w);
+        }
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+             //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //WebEngine webEngine = webView.getEngine();
+                wE = dictionaryManagement.dictionaryLookup(newValue, d).getWord_target();
+                webEngine.loadContent(dictionaryManagement.dictionaryLookup(newValue, d).getWord_explain());
+            }
+            
+        });
+            }
+        }
+    });
+ } 
 /**
  * xử lí click button Search
  * @param event 
- */   
+ */ 
     public void clickSearch(ActionEvent event){
         String sFromTextField = wSearch.getText();
         sFromTextField =sFromTextField.trim();
+        
         w = dictionaryManagement.dictionaryLookup(sFromTextField, d);
         wE = w.getWord_target();
         String html = w.getWord_explain();
+
         WebEngine webEngine = webView.getEngine();
         webEngine.loadContent(html);
         
@@ -142,7 +177,7 @@ public class DictionaryApplicationController extends Application{
         
         
         
-       // System.out.print(s);
+       
     }
     /**
      * phat am 
@@ -434,5 +469,11 @@ public class DictionaryApplicationController extends Application{
            System.out.println(e.getMessage());
        }
            
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+       //List<String> listWord = dictionaryManagement.dictionarySearcher(d, wSearch.getText());
+       //TextFields = 
     }
 }

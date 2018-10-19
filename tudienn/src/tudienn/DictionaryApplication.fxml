@@ -14,7 +14,7 @@
    <top>
       <Pane prefHeight="84.0" prefWidth="1031.0" style="-fx-background-color: #29B6F6;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="wSearch" layoutX="14.0" layoutY="42.0" prefHeight="31.0" prefWidth="216.0" />
+            <TextField fx:id="wSearch" layoutX="14.0" layoutY="42.0" onAction="#displaySuggest" prefHeight="31.0" prefWidth="216.0" />
             <Button fx:id="search" layoutX="261.0" layoutY="42.0" mnemonicParsing="false" onAction="#clickSearch" style="-fx-background-color: #ffffff;" text=" tra cứu" underline="true" />
             <Button fx:id="addWord" layoutX="496.0" layoutY="42.0" mnemonicParsing="false" onAction="#clickAddWord" style="-fx-background-color: #ffffff;" text="addWord" underline="true" />
             <Button fx:id="editWord" layoutX="649.0" layoutY="42.0" mnemonicParsing="false" onAction="#clickEditWord" style="-fx-background-color: #ffffff;" text="EditWord" underline="true" />
