@@ -34,42 +34,26 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-//import static tudienn.DictionnaryCommanLine.dictionarySearcher;
+
 
 /**
  * FXML Controller class
  *
- * @author thinhnguyen
+ * @author thinh&linh 
  */
 public class DictionaryApplicationController extends Application implements  Initializable{
-   // private  Stage addWordWindow ;
-    
-   // private final FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("addWord.fxml"));
-    private final FXMLLoader fXMLLoader1 = new FXMLLoader(getClass().getResource("DelWord.fxml"));
+   
+   // private final FXMLLoader fXMLLoader1 = new FXMLLoader(getClass().getResource("DelWord.fxml"));
     
     private DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private static Dictionary d;
     private static Word w = new Word("","nope") ;
-  //  private static String sFromTextField ;
+  
     private static String wE; // Word English tim dc, su dung cho void
     private static String wV; // word Explain tim duoc
    
     public void dictionaryAdvanced(){
          d = dictionaryManagement.insertFromFile();
-         
-        //showAllWords(d);
-        //Word w = dictionaryManagement.dictionaryLookup(d);
-        //if(w != null){ 
-        //System.out.println("tieng viet: "+ w.getWord_explain());
-        //dictionaryManagement.speech(w.getWord_target());
-        //}
-        //else System.out.println( "khong tim dc");
-        //List<String> a = dictionarySearcher(d, "tra");
-        //for(String s: a){
-        //    System.out.println(s);
-        //}
-        
-        //d = dictionaryManagement.AddWord(d);
     }
     /**
      * Initializes the controller class.
@@ -111,7 +95,10 @@ public class DictionaryApplicationController extends Application implements  Ini
     
     
     
-   
+ /**
+  * bam enter == click seach
+  * @param event 
+  */  
 public void displaySuggest(ActionEvent event){
     wSearch.setOnKeyPressed(new EventHandler<KeyEvent>(){
         @Override
@@ -184,7 +171,10 @@ public void displaySuggest(ActionEvent event){
      * @param event 
      */
     public void clickVoice(ActionEvent event){
-        dictionaryManagement.speech(wE);
+        if(wSearch.getText().length() ==0){
+            dictionaryManagement.speech("Nope");
+        }
+        else dictionaryManagement.speech(wE);
     }
     /**
      * 
@@ -229,8 +219,8 @@ public void displaySuggest(ActionEvent event){
         }
         else{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("thêm từ: " + eW + "vào từ điển???");
-           // alert.show();
+            alert.setContentText("thêm từ: " + eW + " vào từ điển???");
+            
             Optional<ButtonType> option = alert.showAndWait();
             if(option.get() == ButtonType.OK){
             d = dictionaryManagement.AddWord(eW, eV, d);
@@ -242,8 +232,7 @@ public void displaySuggest(ActionEvent event){
             }
         }
         
-        //addWordWindow.close();
-        //Add.setCancelButton(true);
+        
         
     }
     /**
@@ -254,13 +243,13 @@ public void displaySuggest(ActionEvent event){
        try {
            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("DelWord.fxml"));
             Parent root1 = (Parent)fXMLLoader.load();
-           // addWordWindow = new Stage();
+           
            Stage delWordWindow = new Stage();
-          // delWordWindow = new Stage();
+          
            delWordWindow.setTitle("XÓA TỪ");
            delWordWindow.setScene(new Scene(root1));
     
-           // stage.initOwner();
+           
            delWordWindow.initModality(Modality.APPLICATION_MODAL);
            delWordWindow.show();
        } catch (Exception e) {
@@ -285,7 +274,7 @@ public void displaySuggest(ActionEvent event){
        else{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("xóa từ: " + s + " ra khỏi từ điển???");
-           // alert.show();
+           
             Optional<ButtonType> option = alert.showAndWait();
             if(option.get() == ButtonType.OK){
             d = dictionaryManagement.DelWord(s, d);
@@ -299,19 +288,19 @@ public void displaySuggest(ActionEvent event){
             
           
        }
-      // else d = dictionaryManagement.DelWord(s, d);
+     
    }
    public void clickEditWord(ActionEvent event){
        try {
            FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("EditWord.fxml"));
             Parent root1 = (Parent)fXMLLoader.load();
-           // addWordWindow = new Stage();
+           
            Stage editWordWindow = new Stage();
-           //editWordWindow = new Stage();
+           
            editWordWindow.setTitle("SỬA TỪ");
            editWordWindow.setScene(new Scene(root1));
     
-           // stage.initOwner();
+          
            editWordWindow.initModality(Modality.APPLICATION_MODAL);
            editWordWindow.show();
        } catch (Exception e) {
@@ -361,11 +350,7 @@ public void displaySuggest(ActionEvent event){
             
                     if(option.get() == ButtonType.OK){
                         
-                        //Word newWord = wD;
-                        //newWord.setWord_target(editedTarget_);
-            
-                        //d= dictionaryManagement.DelWord(wEdit_, d);
-                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
+                        
                         d = dictionaryManagement.AddWord(editedTarget_, wD.getWord_explain(), d);
                         d = dictionaryManagement.DelWord(wEdit_, d);
             
@@ -386,12 +371,7 @@ public void displaySuggest(ActionEvent event){
             
                     if(option.get() == ButtonType.OK){
             
-                        //Word newWord = wD;
                         
-                        //newWord.setWord_target(editedTarget_);
-            
-                        //d= dictionaryManagement.DelWord(wEdit_, d);
-                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
                         d = dictionaryManagement.AddWord(wEdit_,editedExplain_ , d);
                         d = dictionaryManagement.DelWord(wEdit_, d); // vì từ mới được thêm vào cuối file nên nó sẽ ko xóa từ vừa sửa 
             
@@ -411,12 +391,7 @@ public void displaySuggest(ActionEvent event){
             
                     if(option.get() == ButtonType.OK){
             
-                        //Word newWord = wD;
                         
-                        //newWord.setWord_target(editedTarget_);
-            
-                        //d= dictionaryManagement.DelWord(wEdit_, d);
-                        //d= dictionaryManagement.AddWord(newWord.getWord_target(), newWord.getWord_explain(), d);
                         d = dictionaryManagement.AddWord(editedTarget_,editedExplain_ , d);
                         d = dictionaryManagement.DelWord(wEdit_, d); // vì từ mới được thêm vào cuối file nên nó sẽ ko xóa từ vừa sửa 
             

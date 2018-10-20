@@ -9,9 +9,13 @@ import com.sun.speech.freetts.VoiceManager;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +69,10 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         List<Word> listWords= new ArrayList<Word>();
         BufferedReader br = null;
         try{
-             File file = new File("D:\\GITHUB\\asg1-thinh-linh\\tudienn\\src\\tudienn\\E_V.txt");
-            br = new BufferedReader(new FileReader(file));
+             File file = new File("E_V.txt");
+             
+              
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF8"));
             String textInLine;
             while((textInLine = br.readLine()) != null){
                 Word word = new Word();
@@ -197,10 +203,12 @@ Dòng 2: Nhập giải thích sang tiếng Việt
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            File file = new File("D:\\GITHUB\\asg1-thinh-linh\\tudienn\\src\\tudienn\\E_V.txt");
-             fw = new FileWriter(file.getAbsoluteFile());
-             bw = new BufferedWriter(fw);
-             List<Word> wordsToFile = d.getWords();
+            
+            File file = new File("E_V.txt");
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF8"));
+            //fw = new FileWriter(file.getAbsoluteFile());
+           // bw = new BufferedWriter(fw);
+            List<Word> wordsToFile = d.getWords();
              for(Word w: wordsToFile){
                  bw.write(w.getWord_target()+w.getWord_explain()+"\n");
              }
