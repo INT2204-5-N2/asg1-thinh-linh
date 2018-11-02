@@ -77,6 +77,7 @@ Dòng 2: Nhập giải thích sang tiếng Việt
             while((textInLine = br.readLine()) != null){
                 Word word = new Word();
                 int index = textInLine.indexOf("<html>");
+                //textInLine = tieng anh + <html> + giai nghia + <html>;
                  String target = textInLine.substring(0, index);
                  target = target.trim();
                  String explain = textInLine.substring(index);

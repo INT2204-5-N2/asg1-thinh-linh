@@ -7,12 +7,14 @@ package tudienn;
 
 /**
  *class Word gồm 2 thuộc tính word_target(từ mới), và word_explain(từ giải nghĩa)
- * @author thinhnguyen
+ * @author 
  */
 public class Word {
    private String word_target; // từ mới
    private String word_explain; // giải nghĩa 
+   
    public Word(){};
+   
    public Word(String tar , String explain){
        word_explain = explain;
        word_target = tar;
